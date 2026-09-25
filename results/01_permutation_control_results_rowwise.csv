@@ -1,0 +1,2 @@
+mean_r_real,std_r_real,mean_r_perm,std_r_perm,vae_params,design
+0.9495005732672899,0.004127501014843992,0.4567849559670506,0.013095179265310335,"{'epochs': 300, 'batch_size': 32, 'lr': 0.001, 'gamma_max': 0.001, 'burn_in_frac': 0.3, 'ramp_frac': 0.3, 'latent_dim': 32, 'hidden_dim': 64, 'beta_kl': 0.01}",symmetric: same 10 VAE seeds (0-9) paired 1-to-1 across both arms; real arm = fixed real matrix; permuted arm = independent row-permutation per replicate (seed 200+i)

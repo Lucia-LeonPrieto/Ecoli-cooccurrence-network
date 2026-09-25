@@ -1,0 +1,6 @@
+lineage,n_members,mrca_size,n_foreign_in_mrca,monophyletic
+1,75,75,0,True
+2,52,150,98,False
+3,9,9,0,True
+4,7,7,0,True
+5,7,7,0,True

@@ -1,0 +1,2 @@
+bm_top30_edges,jaccard_top30_edges,shared_edges,bm_only_edges,jaccard_only_edges,mean_prevalence_bm_only,mean_prevalence_jaccard_only
+585,579,401,184,178,0.5025905797101449,0.7860299625468165

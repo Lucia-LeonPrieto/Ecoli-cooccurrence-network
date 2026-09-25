@@ -1,0 +1,6 @@
+metric,A,B,n,median_a,median_b,median_diff,n_a_gt_b,n_b_gt_a,n_ties,W_stat,p_raw,p_holm,significant_holm
+fpr_latent,vae,phi_raw,35,0.5,0.5,-0.1666666667,6,22,7,53.0,0.0006026473089,0.001957057953,significant
+fpr_latent,vae,l1_signed,35,0.5,0.5,-0.1666666667,4,21,10,31.0,0.0003914115906,0.001957057953,significant
+fpr_latent,vae,l1_logistic_bagged,35,0.5,0.5,-0.1666666667,6,22,7,49.0,0.0004325762226,0.001957057953,significant
+fpr_latent,vae,bootstrap_mean,35,0.5,0.3333333333,0.0,11,16,8,157.0,0.440241865,0.440241865,not_significant
+fpr_latent,vae,phi_bagged,35,0.5,0.6666666667,-0.1666666667,3,21,11,27.5,0.0004459132555,0.001957057953,significant

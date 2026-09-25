@@ -1,0 +1,18 @@
+{
+  "_comment": "CHANGE (reviewer response, point 2): single source of truth for the VAE hyperparameters used EVERYWHERE in this repo (final network, 75x bootstrap confidence, the 30-iteration outer stability comparison, and the 6-method ground-truth comparison). Previously latent_dim/hidden_dim/beta_kl were hardcoded independently in build_final_network.py, pipeline_main.py and simulation_ground_truth.py, which was a silent-inconsistency risk. build_final_network.py, pipeline_main.py and simulation_ground_truth.py now all load this file via src/vae_config_loader.py instead of hardcoding these values.",
+  "_selection_method": "ground_truth_composite_harmonic_mean_normalized_aucpr_specificity_latent",
+  "_selection_note": "Selected by simulation_ground_truth.py run_hyperparameter_search_ground_truth() on tuning seeds 200-229 (30 replicas, disjoint from pilot 0-4 and final evaluation 100-134). FINAL criterion (see code comment above run_hyperparameter_search_ground_truth for the two discarded alternatives and why): harmonic mean of min-max-normalized mean_auc_pr and mean_spec_latent (=1-mean_fpr_latent) across the 48 configs. Composite-score winner: {'latent_dim': 32, 'hidden_dim': 64, 'beta_kl': 0.01} (score=0.8027, mean_auc_pr=0.6685, mean_fpr_latent=0.3833). Held-out log-likelihood winner (complementary, real-data k-fold CV, NOT part of the composite score): latent_dim=32, hidden_dim=64, beta_kl=0.05 (mean_log_likelihood_held_out=-7.9596). Composite-score winner matches held-out log-likelihood winner: False. Previously hardcoded in build_final_network.py (old, stability-based search which selected beta_kl=0.5, a discrepancy that already existed before this revision -- see CHANGES_SUMMARY.md point 1): {'latent_dim': 32, 'hidden_dim': 64, 'beta_kl': 0.05}. Composite-score winner matches old hardcoded config: False.",
+  "base_params": {
+    "epochs": 300,
+    "batch_size": 32,
+    "lr": 0.001,
+    "gamma_max": 0.001,
+    "burn_in_frac": 0.3,
+    "ramp_frac": 0.3
+  },
+  "selected_params": {
+    "latent_dim": 32,
+    "hidden_dim": 64,
+    "beta_kl": 0.01
+  }
+}

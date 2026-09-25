@@ -1,0 +1,232 @@
+{
+  "config": {
+    "vae_params": {
+      "epochs": 300,
+      "batch_size": 32,
+      "lr": 0.001,
+      "gamma_max": 0.001,
+      "burn_in_frac": 0.3,
+      "ramp_frac": 0.3,
+      "latent_dim": 32,
+      "hidden_dim": 64,
+      "beta_kl": 0.01
+    },
+    "seed": 42,
+    "method": "bernoulli_vae_network single-shot (normalize_adj=False), same as build_final_network.py's reported network",
+    "topk": 50
+  },
+  "referencia": {
+    "fuente": "bernoulli_vae_network single-shot (150 strains, seed 42) -- matches build_final_network.py's reported network",
+    "solapamiento_top30_con_JSON": 1.0,
+    "n_aristas_JSON": 585,
+    "aristas_interes_en_referencia": {
+      "EspM-EspM1": {
+        "peso": -0.4024105966091156,
+        "rank_por_|peso|": 299,
+        "en_top50": false
+      },
+      "NleG-NleD": {
+        "peso": -0.5020105838775635,
+        "rank_por_|peso|": 139,
+        "en_top50": false
+      }
+    }
+  },
+  "fase2_tabla": [
+    {
+      "cluster_excluido": 1,
+      "n_cepas_excluidas": 75,
+      "n_cepas_restantes": 75,
+      "pearson_vs_red_completa": 0.6612,
+      "jaccard_top50_vs_red_completa": 0.2195,
+      "pearson_solo_aristas_ref(JSON)": 0.8588,
+      "recall_top50": 0.36,
+      "jaccard_red_final_top30": 0.3205,
+      "n_aristas_propio_top30": 585
+    },
+    {
+      "cluster_excluido": 2,
+      "n_cepas_excluidas": 52,
+      "n_cepas_restantes": 98,
+      "pearson_vs_red_completa": 0.8297,
+      "jaccard_top50_vs_red_completa": 0.6393,
+      "pearson_solo_aristas_ref(JSON)": 0.9334,
+      "recall_top50": 0.78,
+      "jaccard_red_final_top30": 0.4498,
+      "n_aristas_propio_top30": 585
+    },
+    {
+      "cluster_excluido": 3,
+      "n_cepas_excluidas": 9,
+      "n_cepas_restantes": 141,
+      "pearson_vs_red_completa": 0.9742,
+      "jaccard_top50_vs_red_completa": 0.8519,
+      "pearson_solo_aristas_ref(JSON)": 0.9874,
+      "recall_top50": 0.92,
+      "jaccard_red_final_top30": 0.7917,
+      "n_aristas_propio_top30": 585
+    },
+    {
+      "cluster_excluido": 4,
+      "n_cepas_excluidas": 7,
+      "n_cepas_restantes": 143,
+      "pearson_vs_red_completa": 0.9772,
+      "jaccard_top50_vs_red_completa": 0.8519,
+      "pearson_solo_aristas_ref(JSON)": 0.9885,
+      "recall_top50": 0.92,
+      "jaccard_red_final_top30": 0.7917,
+      "n_aristas_propio_top30": 585
+    },
+    {
+      "cluster_excluido": 5,
+      "n_cepas_excluidas": 7,
+      "n_cepas_restantes": 143,
+      "pearson_vs_red_completa": 0.9737,
+      "jaccard_top50_vs_red_completa": 0.7857,
+      "pearson_solo_aristas_ref(JSON)": 0.9883,
+      "recall_top50": 0.88,
+      "jaccard_red_final_top30": 0.7808,
+      "n_aristas_propio_top30": 585
+    }
+  ],
+  "fase2_aristas_interes_por_cluster": {
+    "1": {
+      "EspM-EspM1": {
+        "w_ref": -0.4024,
+        "w_excl": -0.3545,
+        "delta": 0.048,
+        "rel_change_%": 11.9,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      },
+      "NleG-NleD": {
+        "w_ref": -0.502,
+        "w_excl": -0.3585,
+        "delta": 0.1435,
+        "rel_change_%": 28.6,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      }
+    },
+    "2": {
+      "EspM-EspM1": {
+        "w_ref": -0.4024,
+        "w_excl": -0.3381,
+        "delta": 0.0643,
+        "rel_change_%": 16.0,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      },
+      "NleG-NleD": {
+        "w_ref": -0.502,
+        "w_excl": -0.3342,
+        "delta": 0.1678,
+        "rel_change_%": 33.4,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      }
+    },
+    "3": {
+      "EspM-EspM1": {
+        "w_ref": -0.4024,
+        "w_excl": -0.5438,
+        "delta": -0.1414,
+        "rel_change_%": -35.1,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      },
+      "NleG-NleD": {
+        "w_ref": -0.502,
+        "w_excl": -0.5046,
+        "delta": -0.0026,
+        "rel_change_%": -0.5,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      }
+    },
+    "4": {
+      "EspM-EspM1": {
+        "w_ref": -0.4024,
+        "w_excl": -0.4301,
+        "delta": -0.0277,
+        "rel_change_%": -6.9,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      },
+      "NleG-NleD": {
+        "w_ref": -0.502,
+        "w_excl": -0.4983,
+        "delta": 0.0037,
+        "rel_change_%": 0.7,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      }
+    },
+    "5": {
+      "EspM-EspM1": {
+        "w_ref": -0.4024,
+        "w_excl": -0.3988,
+        "delta": 0.0036,
+        "rel_change_%": 0.9,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      },
+      "NleG-NleD": {
+        "w_ref": -0.502,
+        "w_excl": -0.5759,
+        "delta": -0.0739,
+        "rel_change_%": -14.7,
+        "in_ref_top50": false,
+        "in_excl_top50": false
+      }
+    }
+  },
+  "fase3": {
+    "casos_revisor1": {
+      "E2348/69": {
+        "accession": "FM180568",
+        "lineage_cluster": 3
+      },
+      "Sakai": {
+        "accession": "BA000007",
+        "lineage_cluster": 2
+      }
+    },
+    "portadores_espM": {
+      "EspM": {
+        "n": 28,
+        "por_cluster": {
+          "1": 23,
+          "2": 1,
+          "4": 4
+        }
+      },
+      "EspM1": {
+        "n": 108,
+        "por_cluster": {
+          "1": 54,
+          "2": 47,
+          "5": 7
+        }
+      }
+    },
+    "portadores_NleG_NleD": {
+      "NleG": {
+        "n": 39,
+        "por_cluster": {
+          "1": 37,
+          "4": 2
+        }
+      },
+      "NleD": {
+        "n": 72,
+        "por_cluster": {
+          "1": 14,
+          "2": 52,
+          "3": 3,
+          "4": 3
+        }
+      }
+    }
+  }
+}

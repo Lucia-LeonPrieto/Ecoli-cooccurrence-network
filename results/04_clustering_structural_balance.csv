@@ -1,0 +1,5 @@
+edge_type,count,total,fraction
+positive_within,335,466,0.7188841201716738
+positive_between,131,466,0.2811158798283262
+negative_within,0,119,0.0
+negative_between,119,119,1.0

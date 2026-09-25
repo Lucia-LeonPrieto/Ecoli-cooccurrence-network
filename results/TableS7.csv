@@ -1,0 +1,6 @@
+Method,Training data per replicate,Aggregation,Statistical target,Computational budget
+VAE (single-shot),"Full binary matrix, one fit",None,"Decoder-weight cosine similarity, point estimate",1 VAE fit (300 epochs)
+Bootstrap Mean,"75 bootstrap subsamples (60%, with replacement)",Mean of quantile-normalised bootstrap scores,Central tendency of the score under resampling,75 VAE fits
+Bootstrap Stat,Same 75 bootstrap subsamples,Full-data score retained only above its pair-specific 80th percentile,Whether the full-data score exceeds what resampling alone would produce for that pair,75 VAE fits plus 1 full fit
+L1 logistic regression (bagged),"50 bootstrap subsamples (60%, with replacement)",Mean of per-replicate L1-regularised logistic coefficients,"Regularised pairwise linear association, sign-stability under resampling",50 logistic fits
+Phi (bagged),"75 bootstrap subsamples (60%, with replacement)",Mean of per-replicate Phi coefficients,Pairwise association for binary variables,75 Phi computations
