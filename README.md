@@ -6,9 +6,7 @@ genomes, using a Bernoulli-VAE together with bootstrap consensus, L1
 neighbourhood-selection logistic regression and the Phi coefficient.
 
 This repository is the single source of truth for the manuscript figures and
-numbers. Every script reads from `data/` and writes to `results/`; there are no
-absolute paths and nothing outside the repository is read.
-
+numbers. Every script reads from `data/` and writes to `results/`.
 ## Layout
 
 ```
