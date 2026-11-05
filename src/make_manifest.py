@@ -125,6 +125,14 @@ CIFRA = {
         "Bootstrap-Mean consensus (63x63) with lineage cluster 4 (7 strains) excluded.",
     "results/phylogenetic_sensitivity/06_consensus_excl_cluster5.npy":
         "Bootstrap-Mean consensus (63x63) with lineage cluster 5 (7 strains) excluded.",
+    "results/phylogenetic_sensitivity/ancestral_reconstruction/events.csv":
+        "Fitch-parsimony changes on the midpoint-rooted NJ tree: NleG 3, NleD 11, EspM 8, EspM1 10 (gains+losses).",
+    "results/phylogenetic_sensitivity/ancestral_reconstruction/fitch_validation.txt":
+        "Own Fitch vs Bio.Phylo ParsimonyScorer: identical minimum changes for the 4 effectors.",
+    "results/phylogenetic_sensitivity/ancestral_reconstruction/tree_NleG_NleD.png":
+        "NJ tree, tips coloured by NleG / NleD presence (0 co-occurrences; NleG 39, NleD 72 strains).",
+    "results/phylogenetic_sensitivity/ancestral_reconstruction/tree_EspM_EspM1.png":
+        "NJ tree, tips coloured by EspM / EspM1 presence (10 co-occurrences; EspM 28, EspM1 108 strains).",
 }
 
 

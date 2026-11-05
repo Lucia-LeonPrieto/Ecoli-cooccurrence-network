@@ -1,0 +1,5 @@
+effector,n_strains,method,gains_pref1,losses_pref1,gains_pref0,losses_pref0,total_transitions,root_state_pref1,root_state_pref0
+NleG,39,Fitch parsimony (midpoint-rooted),2,1,2,1,3,0,0
+NleD,72,Fitch parsimony (midpoint-rooted),9,2,9,2,11,0,0
+EspM,28,Fitch parsimony (midpoint-rooted),7,1,7,1,8,0,0
+EspM1,108,Fitch parsimony (midpoint-rooted),1,9,2,8,10,1,0

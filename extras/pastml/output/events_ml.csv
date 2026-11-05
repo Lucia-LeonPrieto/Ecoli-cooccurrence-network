@@ -1,0 +1,13 @@
+effector,root,method,exp_gains_marginal,exp_losses_marginal,exp_total_marginal,map_gains,map_losses,map_total,root_P1,loglik,n_unresolved_nodes
+NleG,midpoint,PastML MPPA F81,3.003,0.472,3.475,3,0,3,0.0147,-13.102,0
+NleD,midpoint,PastML MPPA F81,11.594,9.428,21.023,10,4,14,0.3256,-36.538,13
+EspM,midpoint,PastML MPPA F81,5.133,11.637,16.77,2,9,11,0.2935,-26.518,4
+EspM1,midpoint,PastML MPPA F81,3.227,11.254,14.481,2,8,10,0.4817,-35.819,3
+NleG,minvar,PastML MPPA F81,3.003,0.433,3.436,3,0,3,0.0026,-13.055,0
+NleD,minvar,PastML MPPA F81,11.613,9.31,20.922,10,4,14,0.2854,-36.536,13
+EspM,minvar,PastML MPPA F81,5.396,11.864,17.26,2,8,10,0.4297,-26.56,3
+EspM1,minvar,PastML MPPA F81,3.225,11.672,14.897,1,9,10,0.7433,-35.95,3
+NleG,inner,PastML MPPA F81,3.003,0.444,3.448,3,0,3,0.0009,-13.102,0
+NleD,inner,PastML MPPA F81,11.639,9.303,20.942,10,4,14,0.2403,-36.538,12
+EspM,inner,PastML MPPA F81,4.819,12.05,16.869,1,10,11,0.6565,-26.518,4
+EspM1,inner,PastML MPPA F81,2.892,11.664,14.556,1,9,10,0.8539,-35.819,2

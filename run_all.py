@@ -90,6 +90,16 @@ Steps, in order:
                                                 search above) and reuses step 10's Table S4 for
                                                 the held-out log-likelihood columns, so it must
                                                 run after step 10.
+    15. src/ancestral_reconstruction.py        Fitch-parsimony gain/loss counts for NleG, NleD,
+                                                EspM and EspM1 on the NJ tree written by step 6
+                                                (06_nj_tree_150strains.nwk, midpoint-rooted in
+                                                memory) + tip-coloured trees for the two pairs.
+                                                Needs biopython; cheap (seconds).
+    16. src/fitch_validation.py                 Checks step 15's minimum change counts against
+                                                Bio.Phylo's ParsimonyScorer; fails the run on any
+                                                mismatch. (PastML maximum-likelihood and Pagel /
+                                                null-simulation analyses live in extras/, outside
+                                                this pipeline.)
 
 Runtime is dominated by steps 1, 2, 5 and 12 (VAE / bootstrap-heavy); expect
 most of a day on CPU. Use  --only 3,4  to run a subset, or  --from 3  to
@@ -130,6 +140,9 @@ STEPS = [
                                       "--n-boot-stability", "500", "--include-l1-diagnostic"]),
     ("cmp_saga_liblinear",      [sys.executable, os.path.join(SRC, "cmp_saga_liblinear.py")]),
     ("extend_tableS2_beta_boundary", [sys.executable, os.path.join(SRC, "extend_tableS2_beta_boundary.py")]),
+    # Only needs step 6's 06_nj_tree_150strains.nwk and step 1's binary matrix; no VAE.
+    ("ancestral_reconstruction", [sys.executable, os.path.join(SRC, "ancestral_reconstruction.py")]),
+    ("fitch_validation",        [sys.executable, os.path.join(SRC, "fitch_validation.py")]),
 ]
 
 

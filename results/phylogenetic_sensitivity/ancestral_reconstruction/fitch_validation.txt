@@ -1,0 +1,9 @@
+Fitch validation: own implementation (src/ancestral_reconstruction.py) vs Bio.Phylo ParsimonyScorer
+tree: 06_nj_tree_150strains.nwk, midpoint-rooted in memory (150 tips)
+
+NleG   own=  3  Bio.Phylo=  3  MATCH
+NleD   own= 11  Bio.Phylo= 11  MATCH
+EspM   own=  8  Bio.Phylo=  8  MATCH
+EspM1  own= 10  Bio.Phylo= 10  MATCH
+
+ALL MATCH
