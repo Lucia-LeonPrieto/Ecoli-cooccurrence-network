@@ -16,7 +16,7 @@ numbers. Every script reads from `data/` and writes to `results/`.
 ├── LICENSE                        # MIT
 ├── MANIFEST.csv                   # sha256 + key figure for every file in results/
 ├── src/
-│   ├── pipeline_main.py           # blocks 1-3: intermediates, Bootstrap-Mean net, Table 1
+│   ├── pipeline_main.py           # blocks 1-3: intermediates, Bootstrap-Mean net, Table 2 (stability)
 │   ├── build_final_network.py     # the REPORTED network + per-edge confidence
 │   ├── inference_functions.py     # all inference + plotting functions (shared library)
 │   ├── negative_edges_analysis.py # Table S3: negative-edge interpretability
@@ -31,10 +31,15 @@ numbers. Every script reads from `data/` and writes to `results/`.
 │   ├── phylo_corrected_convergence.py       # Mantel-Haenszel phylogeny-corrected clustering
 │   ├── cmp_saga_liblinear.py      # saga-vs-liblinear solver agreement (Methods 2.5)
 │   ├── extend_tableS2_beta_boundary.py      # Table S2 boundary-probe rows (Methods 2.4)
+│   ├── ancestral_common.py        # shared loaders: single NJ tree (midpoint-rooted in memory) + binary matrix
+│   ├── ancestral_reconstruction.py# Fitch-parsimony gains/losses for NleG/NleD and EspM/EspM1 (step 15)
+│   ├── fitch_validation.py        # step 15 counts vs Bio.Phylo ParsimonyScorer (step 16)
 │   ├── vae_config.json            # single source of truth for VAE hyperparameters
 │   ├── vae_config_loader.py       # loads vae_config.json for every script that fits a VAE
 │   ├── make_manifest.py           # (re)generate MANIFEST.csv
 │   └── figure_style.py            # vendored matplotlib style helper
+├── extras/
+│   └── pastml/                    # OPTIONAL maximum-likelihood ancestral states (own env; NOT run by run_all.py)
 ├── data/
 │   ├── input/EffectorRepertoire_Ecoli.xlsx      # INPUT: 63 effector families x 150 strains
 │   └── genomes/
@@ -83,7 +88,7 @@ python src/make_manifest.py
 
 | Step | Script | Produces (in `results/`) |
 |-----:|--------|--------------------------|
-| 1 | `pipeline_main.py` | `01_binary_matrix.csv`, `01_strains_per_effector.csv`, `01_vae_hyperparameter_search_results.csv`, `01_permutation_control_results_rowwise.csv`, `01_bootstrap_convergence_results.csv`, `01_method_stability_comparison_table1_input.csv` (**Table 1**, 7 methods), `01_S_vae_outer.npy`, `01_S_bm_outer.npy`, `01_bootstrap_mean_per_edge_stats.csv`, `01_jaccard_differential_*.csv`, `01_threshold_sensitivity_bootstrap_mean.csv`, `01_network_bootstrap_mean_top30_table1_input.json` |
+| 1 | `pipeline_main.py` | `01_binary_matrix.csv`, `01_strains_per_effector.csv`, `01_vae_hyperparameter_search_results.csv`, `01_permutation_control_results_rowwise.csv`, `01_bootstrap_convergence_results.csv`, `01_method_stability_comparison_table1_input.csv` (data of **Table 2**, stability of the 7 methods; despite the filename it is not Table 1), `01_S_vae_outer.npy`, `01_S_bm_outer.npy`, `01_bootstrap_mean_per_edge_stats.csv`, `01_jaccard_differential_*.csv`, `01_threshold_sensitivity_bootstrap_mean.csv`, `01_network_bootstrap_mean_top30_table1_input.json` |
 | 2 | `build_final_network.py` | `02_network_final_signed_similarity.csv` (**reported network**, single-shot VAE, 63×63 signed cosine), `02_edge_confidence.csv` (single-shot value + bootstrap sd over 75 replicas), `02_S_boot_reference_stack.npy` (75,63,63), `02_threshold_sensitivity.csv`, `02_network_final_top30.json` (585 edges, top-30 %) |
 | 3 | `negative_edges_analysis.py` | `TableS3.csv` |
 | 4 | `hierarchical_clustering.py` | `TableS9.csv`, `04_clustering_structural_balance.csv`, `04_clustering_silhouette_scores.csv`, `04_network_final_clustered.json` (**k = 7**), `figures/FigureS2a.pdf`, `figures/FigureS2b.{pdf,png}` |
@@ -97,6 +102,14 @@ python src/make_manifest.py
 | 12 | `phylo_corrected_convergence.py --n-boot-stability 500 --include-l1-diagnostic` | `phylo_corrected_convergence/12_lineage_assignment.csv`, `12_association_MH_logodds_phylo_corrected.csv`, `12_clusters_MH_composition_support.csv`, `12_ari_permutation_test.csv` (**ARI = 0.16, p = 0.0004**, Table S10/S11), `12_l1_stratified_diagnostic_EXCLUDED_*.csv` (Table S12), `figures/12_lineage_dendrogram_qc.{pdf,png}` |
 | 13 | `cmp_saga_liblinear.py` | `ground_truth_validation/saga_vs_liblinear_25rep.csv` |
 | 14 | `extend_tableS2_beta_boundary.py` | `ground_truth_validation/TableS2.csv` (adds the 2 boundary-probe rows) |
+| 15 | `ancestral_reconstruction.py` | `phylogenetic_sensitivity/ancestral_reconstruction/events.csv` (Fitch-parsimony gains/losses for NleG, NleD, EspM, EspM1), `tree_NleG_NleD.png`, `tree_EspM_EspM1.png` |
+| 16 | `fitch_validation.py` | `phylogenetic_sensitivity/ancestral_reconstruction/fitch_validation.txt` (step 15 minimum changes vs Bio.Phylo `ParsimonyScorer`; the run stops on any mismatch) |
+
+Steps 15-16 take seconds and need only step 6's `06_nj_tree_150strains.nwk` (midpoint-rooted in memory)
+and step 1's binary matrix. The optional maximum-likelihood ancestral-state reconstruction (PastML, MPPA/F81)
+lives in `extras/pastml/`, in its own environment because PastML conflicts with the scipy/numpy pins in
+`requirements.txt` (see `extras/pastml/README.md`). `run_all.py` does **not** run it, and its output is
+neither in `results/` nor in `MANIFEST.csv`.
 
 `results/figures/Graph_Clustered.png` is not produced by any script: it is a
 manual Cytoscape layout of `04_network_final_clustered.json` (opened
@@ -116,7 +129,7 @@ Two networks are built and both are kept:
   deviation across 75 bootstrap resamples of the strains — the bootstrap stack
   is **not** averaged into the network.
 * **`01_network_bootstrap_mean_top30_table1_input.json` — the Bootstrap-Mean network.** The mean
-  of the same 75 replicas. It is one of the seven methods compared in Table 1
+  of the same 75 replicas. It is one of the seven methods compared in Table 2
   (`01_method_stability_comparison_table1_input.csv`); it is not the reported network.
 
 ## Input data
