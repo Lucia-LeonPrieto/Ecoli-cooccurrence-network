@@ -62,7 +62,7 @@ CIFRA = {
     "results/phylogenetic_sensitivity/06_lineage_summary.json":
         "Phase-1 parameters: cut height, cluster sizes, merges.",
     "results/phylogenetic_sensitivity/06_findings_reviewer_cases.json":
-        "Phase 2/3 findings: reference top-30 overlap, per-cluster effect on EspM-EspM1 / NleG-NleD, reviewer strain cases.",
+        "Phase 2/3 findings: reference top-30 overlap, per-cluster effect on EspM-EspM1 / NleG-NleD, case-study strains.",
     "results/phylo_corrected_convergence/12_ari_permutation_test.csv":
         "Mantel-Haenszel-derived (11-cluster) assignment vs the VAE's 7 modules: adjusted Rand index=0.16, empirical p=0.0004 (10000 relabelings). L1 diagnostic comparator (excluded from main analysis): ARI=0.02, p=0.223 (not significant).",
     "results/figures/FigureS2a.pdf":

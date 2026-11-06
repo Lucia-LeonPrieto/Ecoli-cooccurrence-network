@@ -1,7 +1,6 @@
 # Reproducibility pin for the E. coli effector co-occurrence pipeline.
-# Captured from the environment used for the final run (conda env "pykeen",
-# Python 3.12.4, Windows).  torch is the CPU build (torch==2.3.1+cpu); the
-# analysis never uses a GPU.
+# Captured from the environment used for the final run (Python 3.12.4, CPU torch).
+# torch is the CPU build (torch==2.3.1+cpu); the analysis never uses a GPU.
 #
 # NOTE: torch 2.3.1 is NOT compatible with numpy >= 2, so numpy is pinned to
 # 1.26.4.  If you bump torch to >= 2.4.1 you may also move to numpy 2.x.
