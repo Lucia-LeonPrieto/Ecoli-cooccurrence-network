@@ -9,8 +9,8 @@ BORDES DIRECTOS y NO marcan como borde:
   - relaciones inducidas por un FACTOR LATENTE compartido H
   - pares de RUIDO sin ninguna dependencia
 
-NO modifica el pipeline principal (pipeline_analysis.py) ni las funciones de
-inferencia: las importa tal cual desde funciones_figures.py.
+NO modifica el pipeline principal (pipeline_main.py) ni las funciones de
+inferencia: las importa tal cual desde inference_functions.py.
 
 Dos fases con PAUSA OBLIGATORIA entre ellas:
   FASE 1 (por defecto)  -> genera 5 réplicas piloto (seeds 0-4) y reporta las

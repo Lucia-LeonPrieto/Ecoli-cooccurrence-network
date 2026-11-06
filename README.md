@@ -23,7 +23,7 @@ numbers. Every script reads from `data/` and writes to `results/`.
 │   ├── hierarchical_clustering.py # k = 7 modules + dendrogram
 │   ├── simulation_ground_truth.py # known-truth validation (7 methods, 35 replicates)
 │   ├── phylogenetic_sensitivity.py# leave-one-lineage-out
-│   ├── effector_lineage_distribution.py     # per-lineage carrier distribution (Reviewer 1)
+│   ├── effector_lineage_distribution.py     # per-lineage carrier distribution
 │   ├── edge_sign_stability_lineage.py       # VAE-based edge sign stability under LOLO
 │   ├── edge_contingency_lineage_check.py    # VAE-free contingency-table stability under LOLO
 │   ├── held_out_loglik_beta_kl_comparison.py# Table S4: held-out ELBO / log-likelihood
