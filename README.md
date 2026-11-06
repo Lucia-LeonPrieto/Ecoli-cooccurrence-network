@@ -32,8 +32,9 @@ numbers. Every script reads from `data/` and writes to `results/`.
 │   ├── cmp_saga_liblinear.py      # saga-vs-liblinear solver agreement (Methods 2.5)
 │   ├── extend_tableS2_beta_boundary.py      # Table S2 boundary-probe rows (Methods 2.4)
 │   ├── ancestral_common.py        # shared loaders: single NJ tree (midpoint-rooted in memory) + binary matrix
-│   ├── ancestral_reconstruction.py# Fitch-parsimony gains/losses for NleG/NleD and EspM/EspM1 (step 15)
-│   ├── fitch_validation.py        # step 15 counts vs Bio.Phylo ParsimonyScorer (step 16)
+│   ├── ancestral_reconstruction.py# Fitch-parsimony transitions for the 63 effectors (Table S14) + gains/losses for NleG/NleD, EspM/EspM1 (step 15)
+│   ├── fitch_validation.py        # step 15 counts (all 63 effectors) vs Bio.Phylo ParsimonyScorer (step 16)
+│   ├── pair_lineage_counts.py     # NleG/NleD and EspM/EspM1 counts inside / outside each lineage (step 17)
 │   ├── vae_config.json            # single source of truth for VAE hyperparameters
 │   ├── vae_config_loader.py       # loads vae_config.json for every script that fits a VAE
 │   ├── make_manifest.py           # (re)generate MANIFEST.csv
@@ -102,8 +103,11 @@ python src/make_manifest.py
 | 12 | `phylo_corrected_convergence.py --n-boot-stability 500 --include-l1-diagnostic` | `phylo_corrected_convergence/12_lineage_assignment.csv`, `12_association_MH_logodds_phylo_corrected.csv`, `12_clusters_MH_composition_support.csv`, `12_ari_permutation_test.csv` (**ARI = 0.16, p = 0.0004**, Table S10/S11), `12_l1_stratified_diagnostic_EXCLUDED_*.csv` (Table S12), `figures/12_lineage_dendrogram_qc.{pdf,png}` |
 | 13 | `cmp_saga_liblinear.py` | `ground_truth_validation/saga_vs_liblinear_25rep.csv` |
 | 14 | `extend_tableS2_beta_boundary.py` | `ground_truth_validation/TableS2.csv` (adds the 2 boundary-probe rows) |
-| 15 | `ancestral_reconstruction.py` | `phylogenetic_sensitivity/ancestral_reconstruction/events.csv` (Fitch-parsimony gains/losses for NleG, NleD, EspM, EspM1), `tree_NleG_NleD.png`, `tree_EspM_EspM1.png` |
-| 16 | `fitch_validation.py` | `phylogenetic_sensitivity/ancestral_reconstruction/fitch_validation.txt` (step 15 minimum changes vs Bio.Phylo `ParsimonyScorer`; the run stops on any mismatch) |
+| 15 | `ancestral_reconstruction.py` | `phylogenetic_sensitivity/ancestral_reconstruction/events.csv` (Fitch-parsimony gains/losses for NleG, NleD, EspM, EspM1), `tree_NleG_NleD.png`, `tree_EspM_EspM1.png`, and, for all 63 effector families, `TableS14.csv` / `TableS14.xlsx` (carriers and minimum transitions) |
+| 16 | `fitch_validation.py` | `phylogenetic_sensitivity/ancestral_reconstruction/fitch_validation.txt` (step 15 minimum changes for all 63 effector families vs Bio.Phylo `ParsimonyScorer`; the run stops on any mismatch) |
+| 17 | `pair_lineage_counts.py` | `phylogenetic_sensitivity/pair_lineage_counts.csv` (NleG/NleD and EspM/EspM1, per lineage, inside the lineage and with it excluded: N, carriers of each effector, co-carriers, expected co-carriers under independence, hypergeometric P(X ≤ observed), lift) |
+
+Step 17 reads only step 1's binary matrix and step 6's lineage assignment (`06_lineage_clusters.csv`). Where an effector is absent from a subset the hypergeometric P is 1 and the lift is undefined (NaN).
 
 Steps 15-16 take seconds and need only step 6's `06_nj_tree_150strains.nwk` (midpoint-rooted in memory)
 and step 1's binary matrix. The optional maximum-likelihood ancestral-state reconstruction (PastML, MPPA/F81)

@@ -90,16 +90,22 @@ Steps, in order:
                                                 search above) and reuses step 10's Table S4 for
                                                 the held-out log-likelihood columns, so it must
                                                 run after step 10.
-    15. src/ancestral_reconstruction.py        Fitch-parsimony gain/loss counts for NleG, NleD,
-                                                EspM and EspM1 on the NJ tree written by step 6
+    15. src/ancestral_reconstruction.py        Fitch-parsimony minimum transitions for all 63
+                                                effector families (TableS14.csv / .xlsx) and
+                                                gain/loss counts for NleG, NleD, EspM and EspM1
+                                                (events.csv) on the NJ tree written by step 6
                                                 (06_nj_tree_150strains.nwk, midpoint-rooted in
                                                 memory) + tip-coloured trees for the two pairs.
                                                 Needs biopython; cheap (seconds).
-    16. src/fitch_validation.py                 Checks step 15's minimum change counts against
-                                                Bio.Phylo's ParsimonyScorer; fails the run on any
-                                                mismatch. (PastML maximum-likelihood and Pagel /
+    16. src/fitch_validation.py                 Checks step 15's minimum change counts for all 63
+                                                families against Bio.Phylo's ParsimonyScorer; fails
+                                                the run on any mismatch. (PastML maximum-likelihood and Pagel /
                                                 null-simulation analyses live in extras/, outside
                                                 this pipeline.)
+    17. src/pair_lineage_counts.py              NleG/NleD and EspM/EspM1 counts inside each lineage and
+                                                with each lineage excluded (N, carriers, co-carriers,
+                                                expected, hypergeometric P, lift). Needs step 1's matrix
+                                                and step 6's lineage assignment.
 
 Runtime is dominated by steps 1, 2, 5 and 12 (VAE / bootstrap-heavy); expect
 most of a day on CPU. Use  --only 3,4  to run a subset, or  --from 3  to
@@ -143,6 +149,8 @@ STEPS = [
     # Only needs step 6's 06_nj_tree_150strains.nwk and step 1's binary matrix; no VAE.
     ("ancestral_reconstruction", [sys.executable, os.path.join(SRC, "ancestral_reconstruction.py")]),
     ("fitch_validation",        [sys.executable, os.path.join(SRC, "fitch_validation.py")]),
+    # Only needs step 1's matrix and step 6's 06_lineage_clusters.csv; no VAE.
+    ("pair_lineage_counts",     [sys.executable, os.path.join(SRC, "pair_lineage_counts.py")]),
 ]
 
 

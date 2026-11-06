@@ -125,10 +125,16 @@ CIFRA = {
         "Bootstrap-Mean consensus (63x63) with lineage cluster 4 (7 strains) excluded.",
     "results/phylogenetic_sensitivity/06_consensus_excl_cluster5.npy":
         "Bootstrap-Mean consensus (63x63) with lineage cluster 5 (7 strains) excluded.",
+    "results/phylogenetic_sensitivity/pair_lineage_counts.csv":
+        "NleG/NleD and EspM/EspM1 per lineage (inside / excluded): lineage 1 inside = N 75, NleG 37, NleD 14, both 0, expected 6.91, P 1.7e-5.",
     "results/phylogenetic_sensitivity/ancestral_reconstruction/events.csv":
         "Fitch-parsimony changes on the midpoint-rooted NJ tree: NleG 3, NleD 11, EspM 8, EspM1 10 (gains+losses).",
     "results/phylogenetic_sensitivity/ancestral_reconstruction/fitch_validation.txt":
-        "Own Fitch vs Bio.Phylo ParsimonyScorer: identical minimum changes for the 4 effectors.",
+        "Own Fitch vs Bio.Phylo ParsimonyScorer: identical minimum changes for all 63 effector families.",
+    "results/phylogenetic_sensitivity/ancestral_reconstruction/TableS14.csv":
+        "Table S14: carriers and minimum Fitch transitions for the 63 effector families (1 to 27; median 12).",
+    "results/phylogenetic_sensitivity/ancestral_reconstruction/TableS14.xlsx":
+        "Table S14 as .xlsx, with a 'Notes' sheet holding the legend (same numbers as TableS14.csv).",
     "results/phylogenetic_sensitivity/ancestral_reconstruction/tree_NleG_NleD.png":
         "NJ tree, tips coloured by NleG / NleD presence (0 co-occurrences; NleG 39, NleD 72 strains).",
     "results/phylogenetic_sensitivity/ancestral_reconstruction/tree_EspM_EspM1.png":

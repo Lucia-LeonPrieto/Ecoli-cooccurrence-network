@@ -7,8 +7,12 @@ Parsimony gives the MINIMUM number of changes.  Where a node is ambiguous the Fi
 run twice (ambiguity resolved towards presence / towards absence); both are reported because the
 gain/loss split (not the total) can depend on it.
 
+Minimum transitions are also computed for all 63 effector families (Table S14).
+
 Outputs (results/phylogenetic_sensitivity/ancestral_reconstruction/):
-    events.csv                  one row per effector
+    events.csv                  one row per effector (the 4 effectors of the two pairs)
+    TableS14.csv                all 63 families: carriers and minimum transitions
+    TableS14.xlsx               same table + a "Notes" sheet with the legend
     tree_NleG_NleD.png          tips coloured by presence of each effector of the pair
     tree_EspM_EspM1.png
 """
@@ -74,6 +78,47 @@ def count_events(t, M):
     return pd.DataFrame(rows)
 
 
+def table_s14(t, M):
+    """Minimum number of transitions (gains + losses, Fitch) for every effector family.
+    Sorted by ascending transitions, ties by name.  A family present in all or in no strain has
+    0 transitions (a constant character needs no change on the tree)."""
+    rows = []
+    for e in M.index:
+        g, l, _ = fitch(t, M.loc[e], 1)
+        rows.append({"Effector family": e, "Strains carrying it": int(M.loc[e].sum()),
+                     "Minimum transitions": g + l})
+    return (pd.DataFrame(rows)
+            .sort_values(["Minimum transitions", "Effector family"], kind="mergesort")
+            .reset_index(drop=True))
+
+
+S14_LEGEND = (
+    "Minimum number of state transitions per effector family. Ancestral states were reconstructed "
+    "by parsimony (Fitch, 1971, Systematic Zoology 20:406-416) on the neighbour-joining tree built "
+    "from the genomic distance matrix, rooted at its midpoint and without outgroup, and the counts "
+    "were confirmed with an independent implementation (Biopython). Because the tree derives from "
+    "genomic distances, counts are minimum estimates."
+)
+
+
+def write_s14_xlsx(s14, path):
+    from openpyxl.styles import Alignment, Font
+    with pd.ExcelWriter(path, engine="openpyxl") as xw:
+        s14.to_excel(xw, sheet_name="Table S14", index=False)
+        ws = xw.sheets["Table S14"]
+        for c in ws[1]:
+            c.font = Font(bold=True)
+            c.alignment = Alignment(wrap_text=True, vertical="top")
+        for col, w in zip("ABC", (22, 20, 22)):
+            ws.column_dimensions[col].width = w
+        ws.freeze_panes = "A2"
+        pd.DataFrame({"Notes": [S14_LEGEND]}).to_excel(xw, sheet_name="Notes", index=False)
+        wn = xw.sheets["Notes"]
+        wn["A1"].font = Font(bold=True)
+        wn["A2"].alignment = Alignment(wrap_text=True, vertical="top")
+        wn.column_dimensions["A"].width = 110
+
+
 def draw_pair(t, M, a, b, path):
     tips = t.get_terminals()
     fig, ax = plt.subplots(figsize=(8, 12))
@@ -100,6 +145,10 @@ def main():
     ev.to_csv(OUT_DIR / "events.csv", index=False)
     print(ev.to_string())
     print(f"  -> {(OUT_DIR / 'events.csv').relative_to(OUT_DIR.parents[2])}")
+    s14 = table_s14(t, M)
+    s14.to_csv(OUT_DIR / "TableS14.csv", index=False)
+    print(f"  -> {(OUT_DIR / 'TableS14.csv').relative_to(OUT_DIR.parents[2])}  ({len(s14)} effector families)")
+    write_s14_xlsx(s14, OUT_DIR / "TableS14.xlsx")
     for a, b in PAIRS:
         draw_pair(t, M, a, b, OUT_DIR / f"tree_{a}_{b}.png")
 

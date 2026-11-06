@@ -1,9 +1,69 @@
 Fitch validation: own implementation (src/ancestral_reconstruction.py) vs Bio.Phylo ParsimonyScorer
-tree: 06_nj_tree_150strains.nwk, midpoint-rooted in memory (150 tips)
+tree: 06_nj_tree_150strains.nwk, midpoint-rooted in memory (150 tips); all 63 effector families
 
-NleG   own=  3  Bio.Phylo=  3  MATCH
-NleD   own= 11  Bio.Phylo= 11  MATCH
-EspM   own=  8  Bio.Phylo=  8  MATCH
-EspM1  own= 10  Bio.Phylo= 10  MATCH
+Cif          own= 15  Bio.Phylo= 15  MATCH
+DUF1778      own=  4  Bio.Phylo=  4  MATCH
+EspF         own= 19  Bio.Phylo= 19  MATCH
+EspG         own=  2  Bio.Phylo=  2  MATCH
+EspH         own=  2  Bio.Phylo=  2  MATCH
+EspJ         own= 16  Bio.Phylo= 16  MATCH
+EspK(a)      own= 17  Bio.Phylo= 17  MATCH
+EspK(b)      own=  8  Bio.Phylo=  8  MATCH
+EspL1        own=  7  Bio.Phylo=  7  MATCH
+EspL2        own= 15  Bio.Phylo= 15  MATCH
+EspL4        own= 14  Bio.Phylo= 14  MATCH
+EspM         own=  8  Bio.Phylo=  8  MATCH
+EspM1        own= 10  Bio.Phylo= 10  MATCH
+EspM2        own= 16  Bio.Phylo= 16  MATCH
+EspN         own= 26  Bio.Phylo= 26  MATCH
+EspN-2       own=  6  Bio.Phylo=  6  MATCH
+EspO         own= 20  Bio.Phylo= 20  MATCH
+EspO1-2      own=  9  Bio.Phylo=  9  MATCH
+EspR1        own=  5  Bio.Phylo=  5  MATCH
+EspR3        own=  5  Bio.Phylo=  5  MATCH
+EspR4        own= 12  Bio.Phylo= 12  MATCH
+EspS         own= 16  Bio.Phylo= 16  MATCH
+EspW         own= 16  Bio.Phylo= 16  MATCH
+EspX1        own= 13  Bio.Phylo= 13  MATCH
+EspX2        own=  1  Bio.Phylo=  1  MATCH
+EspX5        own=  7  Bio.Phylo=  7  MATCH
+EspX6        own=  3  Bio.Phylo=  3  MATCH
+EspY1        own=  2  Bio.Phylo=  2  MATCH
+EspY2        own=  2  Bio.Phylo=  2  MATCH
+EspY3        own=  2  Bio.Phylo=  2  MATCH
+EspY4        own=  1  Bio.Phylo=  1  MATCH
+EspZ         own=  1  Bio.Phylo=  1  MATCH
+IpaH?        own= 17  Bio.Phylo= 17  MATCH
+Map          own=  6  Bio.Phylo=  6  MATCH
+NleA         own= 15  Bio.Phylo= 15  MATCH
+NleB         own=  8  Bio.Phylo=  8  MATCH
+NleB2        own=  9  Bio.Phylo=  9  MATCH
+NleC         own= 15  Bio.Phylo= 15  MATCH
+NleD         own= 11  Bio.Phylo= 11  MATCH
+NleE         own= 10  Bio.Phylo= 10  MATCH
+NleF         own= 13  Bio.Phylo= 13  MATCH
+NleG         own=  3  Bio.Phylo=  3  MATCH
+NleG1        own= 12  Bio.Phylo= 12  MATCH
+NleG2(a)     own= 18  Bio.Phylo= 18  MATCH
+NleG2(b)     own= 21  Bio.Phylo= 21  MATCH
+NleG5(a)     own= 13  Bio.Phylo= 13  MATCH
+NleG5(b)     own= 14  Bio.Phylo= 14  MATCH
+NleG6(a)     own=  7  Bio.Phylo=  7  MATCH
+NleG6(b)     own= 12  Bio.Phylo= 12  MATCH
+NleG7(a)     own= 16  Bio.Phylo= 16  MATCH
+NleG7(b)     own= 13  Bio.Phylo= 13  MATCH
+NleG8(a)     own= 14  Bio.Phylo= 14  MATCH
+NleG8(b)     own= 14  Bio.Phylo= 14  MATCH
+NleH1-1      own=  9  Bio.Phylo=  9  MATCH
+NleH1-2      own= 14  Bio.Phylo= 14  MATCH
+NleL         own= 23  Bio.Phylo= 23  MATCH
+NleL-like?   own=  4  Bio.Phylo=  4  MATCH
+NleN         own= 15  Bio.Phylo= 15  MATCH
+OspG         own= 15  Bio.Phylo= 15  MATCH
+OspG/NleH    own= 27  Bio.Phylo= 27  MATCH
+SopA Shigella/NleL-2 own=  8  Bio.Phylo=  8  MATCH
+TccP         own= 17  Bio.Phylo= 17  MATCH
+Tir          own= 14  Bio.Phylo= 14  MATCH
 
+63 effector families compared
 ALL MATCH
