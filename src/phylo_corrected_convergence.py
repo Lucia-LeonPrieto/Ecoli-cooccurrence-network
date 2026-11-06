@@ -2,23 +2,23 @@
 # -*- coding: utf-8 -*-
 """
 Mantel-Haenszel phylogeny-corrected pairwise association + bootstrap-supported
-hierarchical clustering (Reviewer 2, point 3, Methods 2.9).
+hierarchical clustering (Methods 2.9).
 
 REPORTED METHOD: Mantel-Haenszel stratified log-odds is the ONLY method used
-for Reviewer 2's point 3 in the manuscript. By default this script computes:
+for the phylogeny-corrected analysis in the manuscript. By default this script computes:
 (1) the 5-lineage UPGMA strain partition already computed and validated
 against the NJ tree in phylogenetic_sensitivity.py's phase1()
 (results/phylogenetic_sensitivity/06_lineage_clusters.csv, 75/52/9/7/7 strains,
-reused here, not re-derived -- Reviewer 2's "do not fix the number of
-clusters a priori" requirement applies to Step 3 below, i.e. the number of
+reused here, not re-derived -- the requirement not to fix the number of
+clusters a priori applies to Step 3 below, i.e. the number of
 effector modules on the corrected association matrix, not to how many
 strain lineages Step 1 uses as strata), (2) the Mantel-Haenszel log-odds
 association matrix, computed WITHIN lineages and pooled ACROSS lineages,
 (3) bootstrap-supported hierarchical clustering of that matrix (k chosen by
 silhouette, not fixed), and (4) the adjusted Rand index of that clustering
 against the reported VAE network's 7 modules. COMPLEMENTARY to the
-leave-one-lineage-out VAE sensitivity analysis (phylogenetic_sensitivity.py,
-Reviewer 1) -- this script does NOT touch the VAE anywhere; it is a
+leave-one-lineage-out VAE sensitivity analysis (phylogenetic_sensitivity.py) --
+this script does NOT touch the VAE anywhere; it is a
 deliberately independent, classical, phylogeny-aware check.
 
 L1-LOGISTIC DIAGNOSTIC (--include-l1-diagnostic): an L1-logistic-bagged
@@ -385,7 +385,7 @@ def step2_l1_diagnostic(matrix, effectors, lineage_strains):
     lineage, so it is not a small-sample artefact -- unlike its well-behaved
     non-stratified use in Methods 2.5. Kept here, opt-in only, as evidence
     for why Mantel-Haenszel (step2_mh) is the method actually used for
-    Reviewer 2's point 3.
+    the phylogeny-corrected analysis.
     """
     print("\n" + "=" * 70)
     print("STEP 2 [DIAGNOSTIC, --include-l1-diagnostic] -- L1 logistic bagged, EXCLUDED from the manuscript")

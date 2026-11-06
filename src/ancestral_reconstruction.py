@@ -1,6 +1,6 @@
 """
 Fitch-parsimony ancestral reconstruction and gain/loss counts for the two effector pairs
-discussed by the reviewers (NleG/NleD and EspM/EspM1), on the single NJ tree
+NleG/NleD and EspM/EspM1, on the single NJ tree
 06_nj_tree_150strains.nwk (midpoint-rooted in memory, see ancestral_common.py).
 
 Parsimony gives the MINIMUM number of changes.  Where a node is ambiguous the Fitch resolution is

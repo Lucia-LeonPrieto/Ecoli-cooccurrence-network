@@ -82,9 +82,8 @@ print(f"  Matrix normalization : {'[0,1] via p99' if NORMALIZE_MATRICES else 'ra
 df_raw = pd.read_excel(file_path, sheet_name=sheet_name, header=1)
 effector_col = df_raw.columns[2]
 
-# Exclusión robusta de columnas de totales POR NOMBRE, no por posición.
-# Antes: strain_cols = df_raw.columns[9:-1]  (recortaba a ciegas la última columna,
-# frágil si el orden/nº de columnas de resumen cambia).
+# Exclude summary (total) columns BY NAME, not by position, so the result does
+# not depend on the order or number of summary columns.
 candidate_cols = df_raw.columns[9:]
 excluded_mask = candidate_cols.str.contains("suma|total", case=False, na=False)
 strain_cols = candidate_cols[~excluded_mask]
@@ -364,11 +363,9 @@ for seed in range(10):
     random_state = 200 + seed
     rng_perm = np.random.default_rng(random_state)
     mat_perm = matrix.copy()
-    # Permutación POR FILA (por efector): baraja qué cepas portan cada efector,
-    # conservando la prevalencia marginal de cada efector (suma por fila) pero
-    # destruyendo la co-ocurrencia entre efectores. Antes se permutaba por
-    # columna, lo que conservaba el tamaño de repertorio por cepa pero NO la
-    # prevalencia por efector, en contra de lo que afirma el manuscrito.
+    # Permutation PER ROW (per effector): shuffles which strains carry each
+    # effector, preserving each effector's marginal prevalence (row sum) but
+    # destroying co-occurrence between effectors.
     for idx in mat_perm.index:
         mat_perm.loc[idx] = rng_perm.permutation(mat_perm.loc[idx].values)
 
@@ -815,7 +812,7 @@ for eff1, eff2, bm_score, jaccard_score, mean_prevalence in bm_not_jaccard_rows[
     pair = f"{eff1} - {eff2}"
     print(f"  {pair:<35} {bm_score:>10.4f} {jaccard_score:>10.4f} {mean_prevalence:>12.4f}")
 
-# --- Guardado de resultados (antes este bloque sólo imprimía por stdout) ---
+# --- Save results ---
 pd.DataFrame([{
     "bm_top30_edges": len(edges_bm),
     "jaccard_top30_edges": len(edges_jaccard),

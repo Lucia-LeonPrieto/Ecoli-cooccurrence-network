@@ -19,7 +19,7 @@ Steps, in order:
     5. src/simulation_ground_truth.py          known-truth validation (7 methods, 35 reps)
     6. src/phylogenetic_sensitivity.py         leave-one-lineage-out
     7. src/effector_lineage_distribution.py    per-lineage carrier distribution for all
-                                                63 effectors (Reviewer-1 lineage-confound
+                                                63 effectors (lineage-confound
                                                 check); depends on step 6's lineage
                                                 assignment, so it must run right after it
     8. src/edge_sign_stability_lineage.py      VAE-based: for each of the 585 reported
@@ -65,7 +65,7 @@ Steps, in order:
                                                 other step's output files.
     12. src/phylo_corrected_convergence.py     Mantel-Haenszel phylogeny-corrected pairwise
                                                 association + bootstrap-supported clustering
-                                                (Reviewer 2, point 3, Methods 2.9), plus the
+                                                (Methods 2.9), plus the
                                                 L1-logistic-bagged diagnostic
                                                 (--include-l1-diagnostic) that documents why
                                                 Mantel-Haenszel was chosen over it (Table S12).

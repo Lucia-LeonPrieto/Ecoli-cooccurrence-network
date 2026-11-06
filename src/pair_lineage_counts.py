@@ -1,5 +1,5 @@
 """
-Per-lineage counts for the two effector pairs discussed by the reviewers (NleG/NleD and EspM/EspM1).
+Per-lineage counts for the two effector pairs NleG/NleD and EspM/EspM1.
 
 For each pair, for each of the 5 UPGMA lineages (results/phylogenetic_sensitivity/06_lineage_clusters.csv)
 and for both subsets (strains INSIDE the lineage, and all strains EXCEPT that lineage), report:

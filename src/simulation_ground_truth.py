@@ -1,5 +1,5 @@
 """
-Validación con verdad conocida (ground truth) — respuesta al Revisor 2.
+Ground-truth validation of the network-inference methods.
 =====================================================================
 
 Comprueba si los métodos de inferencia de red que ya usa el pipeline
@@ -552,10 +552,10 @@ def _eval_score_matrix(S, gt, n):
 
 
 # =====================================================================
-# POINT 1 -- VAE hyperparameter selection by ground-truth recovery accuracy,
-# replacing the seed-to-seed STABILITY criterion previously used in
-# pipeline_main.py Block 3 (kept there now as a diagnostic only; see the
-# CHANGE comment at the top of that block).
+# VAE hyperparameter selection by ground-truth recovery accuracy. The
+# seed-to-seed STABILITY search in pipeline_main.py Block 3 is diagnostic only
+# and does not determine the operative hyperparameters (see the note at the
+# top of that block).
 #
 # Why this belongs here and not in pipeline_main.py: this reuses the same
 # synthetic-ground-truth machinery (generate_synthetic_ground_truth,
@@ -565,11 +565,10 @@ def _eval_score_matrix(S, gt, n):
 # Table 1 / the manuscript's method comparison -- using the same replicates
 # for tuning and reporting would be data leakage.
 #
-# SELECTION CRITERION -- final version, fixed after two discarded attempts
-# (kept here, and their failure mode documented, so nobody re-discovers the
-# same dead ends re-touching this code later):
+# SELECTION CRITERION -- composite score. Two simpler criteria were rejected,
+# for the reasons below:
 #
-#   DISCARDED #1 -- pure mean_fpr_latent (lower is better), tie-broken by
+#   REJECTED #1 -- pure mean_fpr_latent (lower is better), tie-broken by
 #   mean_auc_pr. This is what the manuscript declares as its primary metric
 #   for the 6/7-method comparison (PRIMARY_FPR_LATENT_PAIRS), so it looked
 #   like the natural choice for hyperparameter selection too. In practice it
@@ -580,7 +579,7 @@ def _eval_score_matrix(S, gt, n):
 #   avoiding false latent-driven edges. A criterion that rewards a model for
 #   refusing to make any calls is not a criterion the manuscript can defend.
 #
-#   DISCARDED #2 -- filter configs to mean_auc_pr >= some fixed floor (e.g.
+#   REJECTED #2 -- filter configs to mean_auc_pr >= some fixed floor (e.g.
 #   0.5), then pick the lowest mean_fpr_latent among survivors. This avoids
 #   the degenerate-model failure mode of #1, but the floor itself is
 #   arbitrary: sorting all 48 configs by mean_auc_pr, the gap that straddles
@@ -590,7 +589,7 @@ def _eval_score_matrix(S, gt, n):
 #   objectively "clean" separation in this data, so any fixed floor is a
 #   judgment call dressed up as an objective threshold.
 #
-#   FINAL CRITERION -- composite score, a harmonic mean of min-max-normalized
+#   SELECTED CRITERION -- composite score, a harmonic mean of min-max-normalized
 #   mean_auc_pr and mean specificity against latent-driven false edges
 #   (mean_spec_latent = 1 - mean_fpr_latent), computed across the 48
 #   configs:
@@ -741,13 +740,12 @@ def run_hyperparameter_search_ground_truth(k_folds_held_out=5):
             lineage_csv=lineage_csv, verbose=False,
         )
         for _, row in ho.iterrows():
-            # CHANGE: `stratified`/`stratify_note` (returned per-row by
-            # evaluate_vae_held_out_likelihood) were previously dropped here,
-            # so held_out_evaluation.csv couldn't show whether folds were
-            # lineage-stratified or fell back to random KFold. They depend
-            # only on the fold-splitting step (real matrix, lineage_clusters.csv,
-            # k_folds, seed) -- identical for every config -- so including them
-            # here needed no re-computation, just no longer discarding them.
+            # `stratified`/`stratify_note` (returned per-row by
+            # evaluate_vae_held_out_likelihood) record whether the folds were
+            # lineage-stratified or fell back to random KFold, so
+            # held_out_evaluation.csv shows it. They depend only on the
+            # fold-splitting step (real matrix, lineage_clusters.csv, k_folds,
+            # seed), so they are identical for every config.
             ho_rows.append(dict(config_id=config_idx, **hp, fold=int(row["fold"]),
                                 elbo_held_out=row["elbo_held_out"],
                                 log_likelihood_held_out=row["log_likelihood_held_out"],
@@ -784,9 +782,9 @@ def _select_winner_and_write_config(gt_df, hardcoded_winner):
     already-computed summary statistics (e.g. after changing the scoring
     formula itself).
     """
-    # ---- FINAL criterion: composite harmonic-mean score (see the long
+    # ---- Composite harmonic-mean score (see the long
     # comment above run_hyperparameter_search_ground_truth for why the two
-    # alternatives tried before this were discarded) ----
+    # simpler alternatives were rejected) ----
     gt_df = gt_df.copy()
     gt_df["mean_spec_latent"] = 1.0 - gt_df["mean_fpr_latent"]
     auc_min, auc_max = gt_df["mean_auc_pr"].min(), gt_df["mean_auc_pr"].max()
@@ -1306,7 +1304,7 @@ def run_full():
     # precision for these metrics, but it takes every value out of the
     # 16th/17th-significant-digit zone where pandas.read_csv()'s default
     # (non round_trip) float parser can silently return a different float64 --
-    # so the CSV round-trips exactly even for a reviewer using plain
+    # so the CSV round-trips exactly with plain
     # pd.read_csv() with no special arguments (confirmed: 505/505 exact vs.
     # 419/505 unrounded, in a dedicated test).
     for _col in ("auc_pr", "fpr_indirect", "fpr_latent"):
@@ -1316,24 +1314,20 @@ def run_full():
     # ---- re-read the file we just wrote, and use THAT as the one and only
     # source for everything downstream (summary + Wilcoxon).
     #
-    # ROOT CAUSE OF A REAL BUG FOUND HERE: pandas.read_csv()'s default C-engine
-    # float parser is NOT round-trip-exact -- in a spot check it silently
-    # altered ~17% of float64 values by 1 ULP (e.g. "0.027586206896551724" read
-    # back as 0.0275862068965517, a DIFFERENT float64). That is far too small
-    # to change any sign/threshold decision elsewhere in this pipeline, but
-    # scipy.stats.wilcoxon's tie handling is exquisitely sensitive to it: two
-    # replicates whose true difference is exactly tied can silently stop being
-    # tied after a lossy round-trip, changing the rank sum (W) and therefore p.
-    # This is why an earlier run's wilcoxon_tests.csv (computed from the
-    # in-memory, pre-CSV data) could NOT be reproduced by reading
-    # 05_ground_truth_per_replicate_results.csv back with plain pd.read_csv()
-    # and rerunning the test -- exactly the failure mode a reviewer would hit.
+    # pandas.read_csv()'s default C-engine float parser is NOT round-trip-exact:
+    # in a spot check it altered ~17% of float64 values by 1 ULP (e.g.
+    # "0.027586206896551724" is read back as 0.0275862068965517, a different
+    # float64). That is too small to change any sign/threshold decision
+    # elsewhere in this pipeline, but scipy.stats.wilcoxon's tie handling is
+    # very sensitive to it: two replicates whose true difference is exactly tied
+    # can stop being tied after a lossy round-trip, changing the rank sum (W)
+    # and therefore p. Results computed from the in-memory data would then not
+    # be reproducible by reading the CSV back with plain pd.read_csv().
     #
-    # Fix: use float_precision="round_trip" (pandas' exact parser, confirmed by
-    # a dedicated test to recover 505/505 known float64 values exactly, vs.
-    # 419/505 for the default parser) and make it authoritative by re-deriving
-    # `res` from the file, so "what's on disk" and "what generated
-    # wilcoxon_tests.csv" are PROVABLY the same computation, always.
+    # Reading with float_precision="round_trip" (pandas' exact parser; it
+    # recovered 505/505 known float64 values exactly vs. 419/505 for the default
+    # parser) and re-deriving `res` from the file makes the file on disk and
+    # wilcoxon_tests.csv provably the same computation.
     res = pd.read_csv(os.path.join(OUT_DIR, "05_ground_truth_per_replicate_results.csv"),
                        float_precision="round_trip")
 

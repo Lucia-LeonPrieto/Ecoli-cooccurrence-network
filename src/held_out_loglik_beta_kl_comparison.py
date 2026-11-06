@@ -70,7 +70,7 @@ OUT_SUMMARY = ROOT / "results" / "ground_truth_validation" / "TableS4.csv"
 
 LATENT_DIM, HIDDEN_DIM = 32, 64
 BETA_KL_FROM_GRID = [0.01, 0.05, 0.10]          # already in held_out_evaluation.csv
-BETA_KL_NEW = [0.001, 0.005]                    # boundary-optimum probes, not previously saved
+BETA_KL_NEW = [0.001, 0.005]                    # boundary-optimum probes, not in the 48-config grid
 K_FOLDS = 5
 SEED = 42
 

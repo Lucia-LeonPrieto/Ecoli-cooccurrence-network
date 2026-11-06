@@ -4,9 +4,9 @@
 Phylogenetic sensitivity — leave-one-lineage-out (LOLO).
 
 See also: src/phylo_corrected_convergence.py -- a separate, independent check
-(Reviewer 2, point 3) that reuses this script's lineage partition as strata
+that reuses this script's lineage partition as strata
 for a classical Mantel-Haenszel association analysis, but never touches the
-VAE. This script is the VAE-based robustness check (Reviewer 1); that one is
+VAE. This script is the VAE-based robustness check; that one is
 not. Neither duplicates the other's calculation.
 
 Phase 1  Define lineage groups from the pre-computed genomic distance matrix
@@ -17,7 +17,7 @@ Phase 1  Define lineage groups from the pre-computed genomic distance matrix
          Also builds a Neighbor-Joining tree (Saitou-Nei, self-contained
          numpy implementation -- no new alignment, no IQ-TREE) from the
          SAME distance matrix used for the UPGMA cut above, purely as a
-         reviewer-requested cross-check of whether the resulting 5-lineage
+         cross-check of whether the resulting 5-lineage
          partition still looks reasonable against a continuous-divergence
          topology. This is diagnostic only: the UPGMA assignment computed
          above (`final_map` / 06_lineage_clusters.csv) remains the single
@@ -36,7 +36,7 @@ Phase 2  For each lineage group, rebuild the network on the effector matrix
          with the manuscript's reported network, not the separate
          Bootstrap-Mean consensus method; see consensus() below.
 
-Phase 3  Concrete reviewer cases: lineage membership of E2348/69 (FM180568) and
+Phase 3  Case studies: lineage membership of E2348/69 (FM180568) and
          Sakai (BA000007); carriage of EspM/EspM1 and NleG/NleD by lineage;
          effect of lineage removal on the EspM-EspM1 and NleG-NleD edges.
 
@@ -132,7 +132,7 @@ def strip_version(acc):
     return str(acc).split(".")[0]
 
 
-# ── Neighbor-Joining tree (reviewer resubmission, Part 1) ──────────────────
+# ── Neighbor-Joining tree ──────────────────
 def build_nj_tree(D, labels):
     """
     Classic Saitou-Nei neighbor-joining, self-contained in numpy so it adds
@@ -233,7 +233,7 @@ def build_nj_tree(D, labels):
 
 def nj_tree_analysis(A, labels, final_map, final_clusters):
     """
-    Reviewer-resubmission Part 1: build the NJ tree from the SAME 150x150
+    Build the NJ tree from the SAME 150x150
     sourmash distance matrix already loaded for the UPGMA lineage cut above,
     save it in Newick, draw the full 150-strain tree colored by the CURRENT
     5 UPGMA lineages, report divergence statistics, and give a data-driven

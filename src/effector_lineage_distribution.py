@@ -3,7 +3,7 @@
 """
 effector_lineage_distribution.py
 ==================================
-Reviewer-1 robustness check: is an effector's involvement in a co-occurrence
+Robustness check: is an effector's involvement in a co-occurrence
 / exclusion edge (e.g. EspM-EspM1, NleG-NleD) plausibly explained by the
 effector simply being confined to one phylogenetic lineage / prophage
 background, rather than a real functional relationship? Before interpreting

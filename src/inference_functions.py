@@ -78,131 +78,6 @@ from figure_style import *
 init_style()
 
 
-# Heatmap con dendrograma
-#---------------------------------------------------------------------------
-# def heatmap_dendrogram(matrix,figures_output, data_output, dpi):# 1️⃣ Calcular distancias entre cepas (filas) usando Jaccard
-#     row_dist = pdist(matrix.values, metric="jaccard")
-#     row_linkage = linkage(row_dist, method="average")
-
-#     # Calcular distancias entre efectores (columnas)
-#     col_dist = pdist(matrix.T.values, metric="jaccard")
-#     col_linkage = linkage(col_dist, method="average")
-
-#     # Guardar orden de columnas y filas
-#     ordered_strains = matrix.columns[leaves_list(col_linkage)]
-#     ordered_effectors = matrix.index[leaves_list(row_linkage)]
-#     pd.Series(ordered_strains).to_csv(f"{data_output}\\ordered_strains.csv", index=False)
-#     pd.Series(ordered_effectors).to_csv(f"{data_output}\\ordered_effectors.csv", index=False)
-
-#     # Crear el clustermap
-#     sns.set(style="white")
-    
-#     g = sns.clustermap(
-#         matrix,
-#         row_linkage=row_linkage,
-#         col_linkage=col_linkage,
-#         cmap="Blues",              # color 0–1
-#         figsize=(25, 15),
-#         cbar_pos=None,
-#         xticklabels=True,
-#         yticklabels=True
-#     )
-    
-#     # Añadir colorbar manualmente
-#     cbar_ax = g.fig.add_axes([0.02, 0.85, 0.15, 0.1])  # arriba izquierda, pequeña
-#     cbar = plt.colorbar(g.ax_heatmap.collections[0], cax=cbar_ax)
-#     cbar.set_label("Presence / Absence", fontsize=8)
-#     cbar.ax.tick_params(labelsize=16)
-
-#     # Personalización estética
-#     g.ax_heatmap.set_xlabel("Strains")
-#     g.ax_heatmap.set_ylabel("Effectors")
-#     # g.ax_heatmap.set_title("Mapa de calor jerárquico de efectores (T3SS)", fontsize=14, pad=20)
-
-#     # Forzar que se vean los nombres de efectores
-#     g.ax_heatmap.set_yticklabels(g.ax_heatmap.get_yticklabels(), fontsize=10)
-#     # Opcional: rotar nombres de cepas para que no se superpongan
-#     g.ax_heatmap.set_xticklabels(g.ax_heatmap.get_xticklabels(), rotation=90, fontsize=4)
-
-#     plt.tight_layout()
-#     plt.savefig(f"{figures_output}/heatmap_dendrogram.png", dpi=dpi)
-#     plt.show()
-
-# Curva de acumulación (nº efectores por cepa)
-#---------------------------------------------------------------------------
-# def strain_barplot(strains_count, figures_output, dpi):
-#     """
-#     Genera un barplot con las cepas ordenadas por número de efectores (ascendente).
-#     Guarda la figura en figures_output.
-#     """
-#     # Ordenar cepas por número de efectores
-#     sorted_counts = strains_count.sort_values()
-
-#     # Crear barplot
-#     _, ax = plt.subplots(figsize=(10, 6))
-#     ax.bar(sorted_counts.index, sorted_counts.values, color="#89BBFE")
-#     style(ax, xlabel="Strains", ylabel="Number of effectors")
-#     plt.setp(ax.get_xticklabels(), rotation=90)
-#     plt.tight_layout()
-
-#     # Guardar y mostrar
-#     plt.savefig(f"{figures_output}/barplot_strains.png", dpi=dpi)
-#     plt.show()
-
-# Curva de prevalencia (nº cepas por efector)
-#---------------------------------------------------------------------------
-# def effector_barplot(effector_count, total, figures_output, dpi):
-#     """
-#     Genera un barplot con las cepas ordenadas por número de efectores (ascendente).
-#     Guarda la figura en figures_output.
-#     """
-#     # Efectores que deben ir en cursiva
-#     italic_effectors = {
-#         "SopA Shigella/NleL-2", "IpaH?", "OspG", "OspG/NleH", "NleL-like?", "DUF1778"
-#     }
-
-#     # Calcular porcentajes
-#     effector_count = effector_count / total * 100
-
-#     # Ordenar cepas por número de efectores
-#     sorted_counts = effector_count.sort_values(ascending=False)
-#     # print(sorted_counts.rename("Prevalence (%)").to_string())
-
-#     x_labels = list(sorted_counts.index)
-#     y_values = sorted_counts.values
-#     n = len(x_labels)
-
-#     bar_width = 0.5
-#     spacing = 1.25  # step entre centros → gap entre bordes = 0.75
-
-#     x_pos = np.arange(n) * spacing
-
-#     _, ax = plt.subplots(figsize=(16, 6))
-#     ax.bar(x=x_pos, height=y_values, color="#89BBFE", width=bar_width)
-
-#     ax.set_xticks(x_pos)
-#     ax.set_xticklabels(x_labels, rotation=60, ha='right')
-
-#     # Negrita solo para los efectores seleccionados
-#     for tick in ax.get_xticklabels():
-#         if tick.get_text() in italic_effectors:
-#             tick.set_fontweight('bold')
-
-#     ax.set_xlim(-spacing * 0.5, (n - 1) * spacing + spacing * 0.5)
-#     ax.set_ylim(0, 105)
-#     ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f"{int(x)}%"))
-
-#     style(ax, xlabel="Effectors", ylabel="Prevalence")
-
-#     ax.set_axisbelow(True)
-#     plt.tight_layout()
-
-#     # Guardar y mostrar
-#     plt.savefig(f"{figures_output}/barplot_effectors.png", dpi=dpi)
-#     plt.savefig(f"{figures_output}/barplot_effectors.pdf", bbox_inches="tight", transparent = True)
-#     plt.show()
-
-
 # Matriz de presencia/ausencia de efectores
 #---------------------------------------------------------------------------
 def plot_effector_presence_matrix(matrix, cross_species_effectors, figures_output,
@@ -488,8 +363,8 @@ def cooccurrence_phi_fisher_rows(matrix, phi_threshold=0.15, fdr_alpha=0.05,
 
 def cooccurrence_jaccard_rows(matrix, normalize_adj=True, normalization_quantile=0.99):
     """
-    Calcula similitud Jaccard entre filas (efectores) con la misma interfaz de
-    normalizaciÃ³n que el resto de matrices inferidas.
+    Compute Jaccard similarity between rows (effectors) with the same
+    normalisation interface as the other inferred matrices.
     """
     dist = pdist(matrix.values, metric='jaccard')
     sim_arr = 1 - squareform(dist)
@@ -1654,7 +1529,7 @@ def inner_search_vae(
 
         results.append({
             "params": params,
-            "metric_value": mae_val_mean,   # igual que antes → compatible
+            "metric_value": mae_val_mean,   # alias of mae_val_mean (compatibility)
             "mae_train_mean": mae_train_mean,
             "mae_val_mean": mae_val_mean,
             "gap": mae_val_mean - mae_train_mean,   # indicador de sobreajuste
@@ -2419,7 +2294,7 @@ def evaluate_vae_held_out_likelihood(matrix, vae_params, k_folds=5, seed=42,
 
 
 # =====================================================================
-# Validación con verdad conocida (ground truth) — Revisor 2
+# Ground-truth validation
 # ---------------------------------------------------------------------
 # Generador de datos binarios sintéticos con estructura de dependencia
 # CONOCIDA a nivel de matriz de precisión (grafo gaussiano), pensado para
@@ -2497,7 +2372,7 @@ def generate_synthetic_ground_truth(n_nodes=30, n_samples=150, seed=0,
     n_struct = n_dp * 2 + n_dn * 2 + n_ch * 3 + n_lat * 3   # = 27
     # -------------------------------------------------------------------
     # POR QUÉ 30 NODOS (y no los 22 del encargo original):
-    # la estructura verdadera pedida por el Revisor 2 consume nodos DISJUNTOS:
+    # the true structure uses DISJOINT nodes:
     #   3 pares directos +  -> 6 nodos
     #   3 pares directos -  -> 6 nodos
     #   3 tríos en cadena   -> 9 nodos
